@@ -1,0 +1,9 @@
+[general]
+name=VertexDistanceChecker
+description=Έλεγχος μήκους μεταξύ κορυφών (vertices) ενός γραμμικού layer
+version=3.2
+qgisMinimumVersion=3.0
+author=Consortis Geospatial
+email=gkaravelis@consortis.gr
+category=Vector
+icon=icon.png
