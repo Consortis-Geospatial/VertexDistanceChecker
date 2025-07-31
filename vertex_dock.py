@@ -6,7 +6,7 @@ from PyQt5.QtCore import Qt, QTimer
 
 class VertexDockWidget(QDockWidget):
     def __init__(self, iface, canvas, vertices):
-        super().__init__("Κορυφές (< αποδεκτό μήκος ευθύγραμμου τμήματος)", iface.mainWindow())
+        super().__init__("Segments Below Minimum Length", iface.mainWindow())
         self.iface = iface
         self.canvas = canvas
         self.vertices = vertices
@@ -27,7 +27,7 @@ class VertexDockWidget(QDockWidget):
         self.layout.addWidget(self.list_widget)
 
         # Download Shapefile Button (created once, hidden initially)
-        self.download_button = QPushButton("Download Shapefile")
+        self.download_button = QPushButton("Export Shapefile")
         self.download_button.clicked.connect(lambda: self.iface.pluginManager().plugins['VertexDistanceChecker'].export_to_shapefile(self.vertices, self.iface.activeLayer()))
         self.download_button.setVisible(False)  # Initially hidden
         self.layout.addWidget(self.download_button)
@@ -54,7 +54,7 @@ class VertexDockWidget(QDockWidget):
     def update_vertex_list(self):
         self.list_widget.clear()
         for v in self.vertices:
-            item_text = f"FID {v['fid']} - Απόσταση {v['distance']:.2f}"
+            item_text = f"FID {v['fid']} - Length: {v['distance']:.2f}"
             self.list_widget.addItem(item_text)
 
     def zoom_to_vertex(self, item):
