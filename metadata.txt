@@ -1,6 +1,6 @@
 [general]
 name=VertexDistanceChecker
-description=Έλεγχος μήκους μεταξύ κορυφών (vertices) ενός γραμμικού layer
+description=VertexDistanceChecker is a QGIS plugin that identifies line segments between consecutive vertices shorter than a user-defined threshold, helping detect oversampled geometry or digitization noise in line features.
 version=3.2
 qgisMinimumVersion=3.0
 author=Consortis Geospatial
