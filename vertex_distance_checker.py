@@ -10,21 +10,21 @@ import os
 class ThresholdDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Ορισμός ελάχιστου αποδεκτού μήκους")
+        self.setWindowTitle("Set Minimum Segment Length")
         self.layout = QVBoxLayout()
 
         # Label and input for threshold
-        self.layout.addWidget(QLabel("Ελάχιστο αποδεκτό μήκος:"))
+        self.layout.addWidget(QLabel("Minimum allowed segment length (in meters):"))
         self.threshold_input = QLineEdit("1.25")
         self.layout.addWidget(self.threshold_input)
 
         # Checkbox for selected features
-        self.check_selected = QCheckBox("Έλεγχος μόνο στα επιλεγμένα")
+        self.check_selected = QCheckBox("Check only selected features")
         self.layout.addWidget(self.check_selected)
 
         # OK and Cancel buttons
         button_layout = QVBoxLayout()
-        ok_button = QPushButton("OK")
+        ok_button = QPushButton("Run Check")
         cancel_button = QPushButton("Cancel")
         button_layout.addWidget(ok_button)
         button_layout.addWidget(cancel_button)
@@ -46,13 +46,13 @@ class VertexDistanceChecker:
 
     def initGui(self):
         icon_path = os.path.join(os.path.dirname(__file__), "icon.png")
-        self.action = QAction(QIcon(icon_path), "Έλεγχος μήκους μεταξύ κορυφών", self.iface.mainWindow())
+        self.action = QAction(QIcon(icon_path), "Vertex Distance Check", self.iface.mainWindow())
         self.action.triggered.connect(self.run)
         self.iface.addToolBarIcon(self.action)
-        self.iface.addPluginToMenu("Έλεγχος μήκους μεταξύ κορυφών", self.action)
+        self.iface.addPluginToMenu("Vertex Distance Check", self.action)
 
     def unload(self):
-        self.iface.removePluginMenu("Έλεγχος μήκους μεταξύ κορυφών", self.action)
+        self.iface.removePluginMenu("Vertex Distance Check", self.action)
         self.iface.removeToolBarIcon(self.action)
         if self.dock:
             self.iface.removeDockWidget(self.dock)
@@ -60,7 +60,7 @@ class VertexDistanceChecker:
     def run(self):
         layer = self.iface.activeLayer()
         if not layer or layer.geometryType() != QgsWkbTypes.LineGeometry:
-            self.iface.messageBar().pushWarning("Σφάλμα", "Παρακαλώ επιλέξτε γραμμικό επίπεδο.")
+            self.iface.messageBar().pushWarning("Vertex Distance Check |Warning|", "Please select a line layer to continue.")
             return
 
         # Show custom dialog
@@ -80,7 +80,7 @@ class VertexDistanceChecker:
         # Check if "Έλεγχος μόνο στα επιλεγμένα" is checked but no selections exist
         if check_only_selected and layer.selectedFeatureCount() == 0:
             self.dock.close()
-            self.iface.messageBar().pushMessage("Σφάλμα", "Παρακαλώ επιλέξτε οντότητες προς έλεγχο", level=0)
+            self.iface.messageBar().pushMessage("Vertex Distance Check |Warning|", "No features selected.", level=0)
             return
 
         # Check features based on checkbox
@@ -124,14 +124,14 @@ class VertexDistanceChecker:
             self.dock.download_button.setVisible(True)
         else:
             self.dock.close()
-            self.iface.messageBar().pushMessage("Έλεγχος μήκους μεταξύ κορυφών", "Σύνολο: 0", level=0)
+            self.iface.messageBar().pushMessage("Vertex Distance Check |Check Complete|", "No short segments found.", level=0)
 
     def export_to_shapefile(self, vertices, source_layer):
         if not vertices:
             return
 
         # Create a new point layer for midpoints with EPSG:2100
-        vl = QgsVectorLayer("Point?crs=epsg:2100", "flagged_lines_midpoints", "memory")
+        vl = QgsVectorLayer("Point?crs=epsg:2100", "short_segment_midpoints", "memory")
         pr = vl.dataProvider()
         vl.startEditing()
 
@@ -146,10 +146,10 @@ class VertexDistanceChecker:
         vl.updateExtents()
 
         # Save to shapefile
-        save_path, _ = QFileDialog.getSaveFileName(None, "Save Shapefile", "", "Shapefile (*.shp)")
+        save_path, _ = QFileDialog.getSaveFileName(None, "Export Shapefile", "", "Shapefile (*.shp)")
         if save_path:
             error = QgsVectorFileWriter.writeAsVectorFormat(vl, save_path, "UTF-8", vl.crs(), "ESRI Shapefile")
             if error[0] == QgsVectorFileWriter.NoError:
-                self.iface.messageBar().pushSuccess("Εξαγωγή", "Το shapefile αποθηκεύτηκε επιτυχώς.")
+                self.iface.messageBar().pushSuccess("Vertex Distance Check |Export Complete|", "Shapefile was successfully saved.")
             else:
-                self.iface.messageBar().pushCritical("Σφάλμα", "Αποτυχία αποθήκευσης του shapefile.")
+                self.iface.messageBar().pushCritical("Vertex Distance Check |Export Failed|", "Failed to save the shapefile.")
