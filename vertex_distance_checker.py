@@ -77,7 +77,7 @@ class VertexDistanceChecker:
         self.iface.addDockWidget(0x1, self.dock)
         self.dock.show()
 
-        # Check if "Έλεγχος μόνο στα επιλεγμένα" is checked but no selections exist
+        # Check if "Check only selected features" is checked but no selections exist
         if check_only_selected and layer.selectedFeatureCount() == 0:
             self.dock.close()
             self.iface.messageBar().pushMessage("Vertex Distance Check |Warning|", "No features selected.", level=0)
