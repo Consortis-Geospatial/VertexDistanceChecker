@@ -1,11 +1,16 @@
 [general]
 name=VertexDistanceChecker
-description=VertexDistanceChecker is a QGIS plugin that identifies line segments between consecutive vertices shorter than a user-defined threshold, helping detect oversampled geometry or digitization noise in line features.
+description=Flags line segments shorter than a defined threshold.
+about=VertexDistanceChecker is a QGIS plugin designed to detect unusually short segments between consecutive vertices in line geometries. These short segments often indicate oversampled geometry, digitization noise, or potential data quality issues.
+
+Users can define a minimum allowed segment length, and the plugin will flag all cases where the distance between two vertices falls below that threshold. Results are displayed in an interactive dock with zoom-to-feature functionality, and can optionally be exported as a point shapefile marking the midpoint of flagged segments.
+
+The plugin supports both full-layer checks and selected-feature-only analysis. 
 version=3.2
 qgisMinimumVersion=3.0
-author=Consortis Geospatial
+author=Gkaravelis Andreas - Consortis Geospatial
 email=gkaravelis@consortis.gr
-category=Vector
+category=Vector, Roadnetwork, Network, Analysis
 homepage=https://github.com/Consortis-Geospatial
 tracker=https://github.com/Consortis-Geospatial/VertexDistanceChecker/issues
 repository=https://github.com/Consortis-Geospatial/VertexDistanceChecker
