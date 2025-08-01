@@ -52,5 +52,15 @@ Coming Soon...
 
 ---
 
+## Support and Contributions
+
+- **Homepage**: [https://github.com/Consortis-Geospatial](https://github.com/Consortis-Geospatial)
+- **Issue Tracker**: [https://github.com/Consortis-Geospatial/VertexDistanceChecker/issues](https://github.com/Consortis-Geospatial/VertexDistanceChecker/issues)
+- **Author**: Gkaravelis Andreas - Consortis Geospatial
+- **Email**: gkaravelis@consortis.gr
+- **Repository**: [https://github.com/Consortis-Geospatial/VertexDistanceChecker](https://github.com/Consortis-Geospatial/VertexDistanceChecker)
+
+---
+
 ## License
 This plugin is released under the GPL-3.0 license
