@@ -1,3 +1,7 @@
+<div align=center>
+   <img width="64" height="64" alt="icon" src="https://github.com/user-attachments/assets/69eed61d-5388-4e2f-8c84-bd7d876479a2" />
+</div>
+
 # VertexDistanceChecker
 **VertexDistanceChecker** is a QGIS plugin that identifies line segments between consecutive vertices shorter than a user-defined threshold, helping detect oversampled geometry or digitization noise in line features.
 
@@ -64,3 +68,7 @@ Coming Soon...
 
 ## License
 This plugin is released under the GPL-3.0 license
+
+<div align=center>
+   <img width="64" height="64" alt="icon" src="https://github.com/user-attachments/assets/69eed61d-5388-4e2f-8c84-bd7d876479a2" />
+</div>
